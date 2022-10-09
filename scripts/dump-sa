@@ -1,0 +1,2 @@
+#!/bin/bash
+terraform -chdir=terraform show -json | jq -rc '.values.root_module.child_modules[].resources[] | select(.type == "google_service_account_key") | .values.private_key' | base64 -d | jq -rc
