@@ -4,3 +4,5 @@
 *.cert filter=git-crypt diff=git-crypt
 *.crt filter=git-crypt diff=git-crypt
 *.pem filter=git-crypt diff=git-crypt
+
+.env.production filter=git-crypt diff=git-crypt
