@@ -1,0 +1,44 @@
+name: "Deploy to GCP"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    env:
+      GCP_CONTAINER_IMAGE: gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_APP_NAME }}:${{ github.sha }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Unlock secrets
+        uses: sliteteam/github-action-git-crypt-unlock@8b1fa3ccc81e322c5c45fbab261eee46513fd3f8
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GCP_PROJECT_ADMIN_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          export_default_credentials: true
+
+      - name: Build
+        run: |
+          gcloud builds submit \
+            --tag ${{ env.GCP_CONTAINER_IMAGE }} \
+            --project ${{ secrets.GCP_PROJECT }} \
+            --quiet
+
+      - name: Deploy
+        run: |
+          gcloud run deploy ${{ secrets.GCP_APP_NAME }} \
+            --image ${{ env.GCP_CONTAINER_IMAGE }} \
+            --project ${{ secrets.GCP_PROJECT }} \
+            --region ${{ secrets.GCP_DEFAULT_REGION }}
+            --platform managed \
+            --quiet
