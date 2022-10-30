@@ -39,6 +39,6 @@ jobs:
           gcloud run deploy ${{ secrets.GCP_APP_NAME }} \
             --image ${{ env.GCP_CONTAINER_IMAGE }} \
             --project ${{ secrets.GCP_PROJECT }} \
-            --region ${{ secrets.GCP_DEFAULT_REGION }}
+            --region ${{ secrets.GCP_DEFAULT_REGION }} \
             --platform managed \
             --quiet
