@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "kostiainen.dev",
+  "short_name": "kostiainen.dev",
+  "start_url": "https://kostiainen.dev",
+  "description": "Portfolio and homepage of Eelis Kostiainen",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml"
+    }
+  ]
+}
