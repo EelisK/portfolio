@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: ${{ steps.node-version.outputs.version }}
       - name: Install modules
-        run: npm ci --also=dev
+        run: npm ci --include=dev
       - name: Run linter
         run: npm run lint
       - name: Run tests
