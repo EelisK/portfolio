@@ -54,4 +54,6 @@ EXPOSE 3000
 
 ENV PORT 3000
 
+ENV NODE_OPTIONS='-r next-logger'
+
 CMD ["node", "server.js"]
